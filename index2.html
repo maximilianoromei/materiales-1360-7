@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materiales — Derecho Crediticio, Bursátil e Insolvencia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --naranja:       #E8590C;
+    --naranja-vivo:  #FF6B1A;
+    --naranja-suave: #FDE8D8;
+    --naranja-deep:  #B5400A;
+    --gris-oscuro:   #1E1E1E;
+    --gris-medio:    #5A5A5A;
+    --gris-claro:    #F4F4F2;
+    --blanco:        #FFFFFF;
+    --borde:         #E0D8D0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--gris-claro); color: var(--gris-oscuro); }
+
+  .hero { position: relative; height: 400px; overflow: hidden; display: flex; align-items: flex-end; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; filter: brightness(0.42) saturate(0.75); }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 0%, rgba(30,10,0,0.3) 40%, rgba(30,10,0,0.88) 100%); }
+  .hero-content { position: relative; z-index: 2; padding: 0 60px 48px; width: 100%; }
+  .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--naranja-vivo); margin-bottom: 10px; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 46px); font-weight: 900; color: var(--blanco); line-height: 1.1; max-width: 700px; }
+  .hero-meta { margin-top: 16px; display: flex; gap: 24px; flex-wrap: wrap; }
+  .hero-meta span { font-size: 13px; color: rgba(255,255,255,0.72); display: flex; align-items: center; gap: 6px; }
+  .hero-meta span::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--naranja-vivo); }
+
+  .accent-bar { height: 5px; background: linear-gradient(90deg, var(--naranja) 0%, var(--naranja-vivo) 60%, var(--naranja-suave) 100%); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 56px 40px 80px; }
+
+  .section { margin-bottom: 56px; animation: fadeUp 0.5s ease both; }
+  .section:nth-child(1){animation-delay:.05s} .section:nth-child(2){animation-delay:.1s}
+  .section:nth-child(3){animation-delay:.15s} .section:nth-child(4){animation-delay:.2s}
+  .section:nth-child(5){animation-delay:.25s} .section:nth-child(6){animation-delay:.3s}
+  @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--borde); }
+  .section-number { width: 36px; height: 36px; border-radius: 50%; background: var(--naranja); color: white; font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 700; color: var(--gris-oscuro); }
+  .section-subtitle { font-size: 11px; color: var(--gris-medio); margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 13px; }
+  .card { background: var(--blanco); border: 1px solid var(--borde); border-radius: 10px; padding: 16px 18px; text-decoration: none; color: inherit; display: flex; align-items: flex-start; gap: 13px; transition: transform .2s, box-shadow .2s, border-color .2s; position: relative; overflow: hidden; }
+  .card::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--naranja); transform: scaleY(0); transform-origin: bottom; transition: transform .2s; border-radius: 3px 0 0 3px; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(232,89,12,.13); border-color: var(--naranja-suave); }
+  .card:hover::after { transform: scaleY(1); }
+  .card-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .card-title { font-size: 13.5px; font-weight: 600; color: var(--gris-oscuro); line-height: 1.35; margin-bottom: 3px; }
+  .card-desc { font-size: 11.5px; color: var(--gris-medio); line-height: 1.5; }
+  .card-tag { display: inline-block; margin-top: 7px; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 20px; }
+  .card-tag.yt  { background: #FFECEC; color: #C0392B; }
+  .card-tag.doc { background: #E8F4FD; color: #1A6EA8; }
+  .card-tag.pdf { background: #FDE8D8; color: var(--naranja-deep); }
+  .card-tag.ppt { background: #FFF3E0; color: #E65100; }
+  .card-tag.ej  { background: #E8F5E9; color: #2E7D32; }
+
+  .list-cards { display: flex; flex-direction: column; gap: 8px; }
+  .list-card { background: var(--blanco); border: 1px solid var(--borde); border-radius: 8px; padding: 11px 16px; text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; transition: transform .2s, box-shadow .2s, border-color .2s; position: relative; overflow: hidden; }
+  .list-card::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--naranja); transform: scaleY(0); transform-origin: bottom; transition: transform .2s; border-radius: 3px 0 0 3px; }
+  .list-card:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(232,89,12,.1); border-color: var(--naranja-suave); }
+  .list-card:hover::after { transform: scaleY(1); }
+  .list-card-icon { font-size: 16px; flex-shrink: 0; }
+  .list-card-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .list-card-tag { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 20px; background: var(--naranja-suave); color: var(--naranja-deep); white-space: nowrap; }
+
+  /* ── TAB NAV ── */
+  .tab-nav { background: var(--blanco); border-bottom: 2px solid var(--borde); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+  .tab-nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; display: flex; gap: 0; }
+  .tab-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--gris-medio); background: none; border: none; cursor: pointer; padding: 16px 24px; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color .2s, border-color .2s; white-space: nowrap; display: flex; align-items: center; gap: 7px; letter-spacing: .02em; }
+  .tab-btn:hover { color: var(--naranja); }
+  .tab-btn.active { color: var(--naranja); border-bottom-color: var(--naranja); }
+  .tab-btn .tab-badge { font-size: 10px; font-weight: 700; background: var(--naranja); color: white; border-radius: 20px; padding: 1px 7px; }
+  .tab-btn.active .tab-badge { background: var(--naranja-deep); }
+
+  /* ── TAB PANELS ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── PANEL JDA — subsecciones ── */
+  .jda-section { margin-bottom: 44px; }
+  .jda-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--borde); }
+  .jda-icon { font-size: 18px; }
+  .jda-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--gris-oscuro); }
+
+  /* ── PANEL NOTAS — estado vacío ── */
+  .notas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .nota-categoria { background: var(--blanco); border: 1px solid var(--borde); border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+  .nota-categoria-icon { font-size: 28px; }
+  .nota-categoria-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--gris-oscuro); }
+  .nota-categoria-desc { font-size: 11.5px; color: var(--gris-medio); line-height: 1.5; }
+  .nota-badge-pronto { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; background: var(--naranja-suave); color: var(--naranja-deep); margin-top: 4px; }
+  .notas-aviso { background: var(--blanco); border: 1px solid var(--borde); border-left: 4px solid var(--naranja); border-radius: 8px; padding: 16px 20px; font-size: 13px; color: var(--gris-medio); line-height: 1.6; margin-bottom: 32px; }
+  .notas-aviso strong { color: var(--gris-oscuro); }
+
+  footer { background: var(--gris-oscuro); color: rgba(255,255,255,.5); text-align: center; font-size: 12px; padding: 22px 40px; }
+  footer strong { color: var(--naranja-vivo); }
+
+  @media(max-width:640px){
+    .hero-content{padding:0 22px 34px}
+    .container{padding:36px 18px 60px}
+    .cards{grid-template-columns:1fr}
+    .tab-nav-inner{padding:0 10px; overflow-x:auto;}
+    .tab-btn{padding:14px 14px; font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/FCE-UBA.jpg/1280px-FCE-UBA.jpg" alt="FCE-UBA"
+       onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/UBA_Logo.svg/800px-UBA_Logo.svg.png'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">UBA · Facultad de Ciencias Económicas · Materia 1360</p>
+    <h1>Derecho Crediticio,<br>Bursátil e Insolvencia</h1>
+    <div class="hero-meta">
+      <span>Primer Cuatrimestre 2026</span>
+      <span>Lunes y Jueves · 21:00 a 23:00 hs</span>
+      <span>12/03 – 04/07/2026</span>
+    </div>
+  </div>
+</div>
+<div class="accent-bar"></div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('materiales', this)">📚 Materiales del Curso</button>
+    <button class="tab-btn" onclick="switchTab('jda', this)">⚖️ Jurisprudencia, Doctrina y Actividades <span class="tab-badge">4</span></button>
+    <button class="tab-btn" onclick="switchTab('notas', this)">📝 Evaluaciones y Notas</button>
+  </div>
+</nav>
+
+<!-- PANEL: MATERIALES -->
+<div id="tab-materiales" class="tab-panel active">
+<div class="container">
+
+  <!-- 1. INTRODUCCIÓN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <div>
+        <div class="section-title">Introducción y contexto histórico</div>
+        <div class="section-subtitle">Clases 1–2 · Presentación, línea de tiempo y cesación de pagos</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a href="https://docs.google.com/presentation/d/1-zngD4unOgPnxfbYlFwtdxBfLo4GyFxO/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Presentación del Curso</div>
+          <div class="card-desc">Objetivos, metodología y programa de la materia.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/u/0/d/1PC0PrFOGK-oR7VgljDOjxRvEukWRR_y01HkBiLpaZxU/edit" target="_blank" class="card">
+        <span class="card-icon">🕐</span>
+        <div>
+          <div class="card-title">Línea de Tiempo</div>
+          <div class="card-desc">Evolución histórica del derecho concursal argentino.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1fkuD6TJsiveX-I1v4kPb5OoVJ2pt5_a6/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Cesación de Pagos</div>
+          <div class="card-desc">Teorías, hechos reveladores y presupuesto objetivo del concurso.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 2. APERTURA Y EFECTOS DEL CONCURSO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <div>
+        <div class="section-title">Apertura y efectos del concurso preventivo</div>
+        <div class="section-subtitle">Clases 3–4 · Resolución de apertura, efectos y pronto pago laboral</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a href="https://drive.google.com/file/d/19qXuWGwed0TWd3E6fQUJS3PEcr9PySG9/view?usp=sharing" target="_blank" class="card">
+        <span class="card-icon">📄</span>
+        <div>
+          <div class="card-title">Resolución de apertura de concurso preventivo</div>
+          <div class="card-desc">Modelo y análisis de la resolución judicial de apertura.</div>
+          <span class="card-tag pdf">PDF</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/185vd2HahYx2RxxOrmrrlvBEpmhVVrj1n/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">🌐</span>
+        <div>
+          <div class="card-title">Concurso en el Extranjero</div>
+          <div class="card-desc">Concursos internacionales, territorialidad y Tratados de Montevideo.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/18CTLOWPM3QrX3aY3go_VNJEpN4XbQnzUPvLxp19Xtvo/edit?usp=sharing" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Efectos del Concurso — Parte 1</div>
+          <div class="card-desc">Efectos sobre contratos, créditos y situación del deudor.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/19Dt-vm6YMRt1PAPr4nz9iksqoIeMGeVu/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Efectos del Concurso — Parte 2</div>
+          <div class="card-desc">Fuero de atracción, intereses y actos prohibidos.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1Jsm7qoJ7Y3-syJjQzIkIqI7ECaC-BfK-/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Pronto Pago Laboral</div>
+          <div class="card-desc">Régimen del art. 16 LCQ. Créditos excluidos del proceso verificatorio.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/document/d/1GBkA_dhZSl5S5sSYun7XIFVHoEQS2JJg/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📝</span>
+        <div>
+          <div class="card-title">Pronto Pago Laboral — Ejercicio Resuelto</div>
+          <div class="card-desc">Caso práctico con resolución paso a paso.</div>
+          <span class="card-tag ej">Ejercicio</span>
+        </div>
+      </a>
+      <a href="https://youtu.be/am_G8GSHKpQ?si=H5O7tzdLpsRWkwAy" target="_blank" class="card">
+        <span class="card-icon">▶️</span>
+        <div>
+          <div class="card-title">Pronto Pago Laboral — Resolución en video</div>
+          <div class="card-desc">Explicación audiovisual del ejercicio resuelto.</div>
+          <span class="card-tag yt">YouTube</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 3. PROCESO VERIFICATORIO E INFORMES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <div>
+        <div class="section-title">Proceso verificatorio e informes del síndico</div>
+        <div class="section-subtitle">Clases 6–7 · Verificación de créditos, informes individual y general</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a href="https://docs.google.com/presentation/d/104EHYZYrXPb_UlEtaLAsbdBJmXo5jMEV/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Informes del Síndico</div>
+          <div class="card-desc">Informe individual (art. 35) e informe general (art. 39 LCQ). Contenidos y plazos.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://drive.google.com/file/d/127BBI2GGGYSb-PBQvCrpmc3iGyhIvfGJ/view?usp=sharing" target="_blank" class="card">
+        <span class="card-icon">📄</span>
+        <div>
+          <div class="card-title">Informe art. 39 — Modelo</div>
+          <div class="card-desc">Modelo de informe general del síndico con estructura completa.</div>
+          <span class="card-tag pdf">PDF</span>
+        </div>
+      </a>
+      <a href="https://drive.google.com/file/d/1cDRezp88SpLeH5xYEyiYjUxNR9kgDWEv/view?usp=sharing" target="_blank" class="card">
+        <span class="card-icon">📄</span>
+        <div>
+          <div class="card-title">Informe art. 35 — Modelo</div>
+          <div class="card-desc">Modelo de informe individual del síndico con estructura completa.</div>
+          <span class="card-tag pdf">PDF</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 4. ACUERDO PREVENTIVO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">4</div>
+      <div>
+        <div class="section-title">Acuerdo preventivo — Negociación y homologación</div>
+        <div class="section-subtitle">Clases 8–10 · Exclusividad, mayorías, cramdown y APE</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a href="https://docs.google.com/presentation/d/103H8hu1oX3Z-zdcz75_lztO9250IOtA_/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Propuesta y Período de Exclusividad</div>
+          <div class="card-desc">Tipos de propuestas, categorías de acreedores y plazo de exclusividad.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/document/d/1BE8vu9t7T_m6cu7aXbSp3IHDhkwH33Z6/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📝</span>
+        <div>
+          <div class="card-title">Ejercicio de Mayorías</div>
+          <div class="card-desc">Cálculo de mayorías de capital y personas. Casos prácticos resueltos.</div>
+          <span class="card-tag ej">Ejercicio</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/10-bBN9yAOC7fh8DnrPXI3lxOesZo3iSg/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Impugnación y Homologación</div>
+          <div class="card-desc">Causales de impugnación, homologación judicial y efectos del acuerdo.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/102g6IKlN0RVf0fom_FRuTmjBnkrygEm7/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Cramdown</div>
+          <div class="card-desc">Salvataje del art. 48 LCQ. Procedimiento y sujetos habilitados.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/document/d/1ysQGgaq8GO_5qZiai1t3z8pIo65vV3ozl2HIBn5zqSk/edit?usp=sharing" target="_blank" class="card">
+        <span class="card-icon">📝</span>
+        <div>
+          <div class="card-title">Ejercicio Cramdown Power</div>
+          <div class="card-desc">Ejercicio práctico sobre el procedimiento de cramdown power.</div>
+          <span class="card-tag ej">Ejercicio</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/10ElEMTIOd-8wFIUA0bVTPPHI39V8PJ5n/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Agrupamiento y APE</div>
+          <div class="card-desc">Concurso por agrupamiento (arts. 65-68) y Acuerdo Preventivo Extrajudicial.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 5. QUIEBRA — DECLARACIÓN Y EFECTOS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">5</div>
+      <div>
+        <div class="section-title">Quiebra — Declaración y efectos</div>
+        <div class="section-subtitle">Clases 11–17 · Sentencia, desapoderamiento, ineficacia y extensión</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a href="https://docs.google.com/presentation/d/1lRbNdmE0vvWastWlQ5Y9TR5mMiK0hPDk/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Quiebra</div>
+          <div class="card-desc">Quiebra directa e indirecta. Sentencia declarativa y sus efectos inmediatos.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/11DgOviQb3zcO_K-vkLy0mus--S3nmJwP/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Conversión y Recursos</div>
+          <div class="card-desc">Conversión de quiebra en concurso preventivo. Recursos procesales disponibles.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1ovmVhH93_JzoHivfs8jjC-mu2mYXHW60/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Cesación de Pagos — Período de sospecha</div>
+          <div class="card-desc">Determinación del período de sospecha y sus efectos sobre los actos del fallido.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1zW0TmMWAly58w64ex8F2-p8BkEhrT_dG/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Efectos de la Quiebra</div>
+          <div class="card-desc">Efectos personales y patrimoniales. Intereses, compensación y derecho de retención.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1su0KUTdHGQP9JOCwrMN2Z_LW5RFPC8X-/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Ineficacia de Pleno Derecho</div>
+          <div class="card-desc">Arts. 118, 119 y 120 LCQ. Actos ineficaces y revocatoria concursal.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1nSkZoq8h4hBhuHRjZjQczTihgpQ-znG3/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Desapoderamiento e Incautación</div>
+          <div class="card-desc">Desapoderamiento del fallido, incautación de bienes y administración por el síndico.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1huXmwTRh7WvUaRL5r6vYgqEqT5HKlBOf/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Extensión de Quiebra — Responsabilidad de terceros y administradores</div>
+          <div class="card-desc">Art. 161 LCQ. Dolo, confusión patrimonial. Arts. 59 y 274 LGS.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/spreadsheets/d/1pzaYgwEApvZp38BnINZf9105pMTaoFD-/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Comparación de Acciones</div>
+          <div class="card-desc">Cuadro comparativo de acciones concursales: ineficacia, revocatoria y extensión.</div>
+          <span class="card-tag doc">Excel</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 6. QUIEBRA — LIQUIDACIÓN Y CONCLUSIÓN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">6</div>
+      <div>
+        <div class="section-title">Quiebra — Explotación, liquidación y conclusión</div>
+        <div class="section-subtitle">Clases 18–24 · Continuación, privilegios, distribución y cierre</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a href="https://docs.google.com/presentation/d/16PRNtYIUnFGGl0DdV7scGqrY7B1uhsgI/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Continuación de la Explotación</div>
+          <div class="card-desc">Arts. 189-195 LCQ. Autorización judicial y cooperativa de trabajo (art. 190).</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/10rLESPTKHLDVURaWd4ZFrxWIkF9xtl2h/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Efectos sobre el Contrato de Trabajo</div>
+          <div class="card-desc">Suspensión, resolución y continuidad de los contratos laborales en la quiebra.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/11-nebJLrZ2RzcicUVhr7W8syA_zA_OCb/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Liquidación y Distribución</div>
+          <div class="card-desc">Formas de liquidación, proyecto de distribución y dividendo concursal.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1BwhRtMVN8j5ZavLxq_LGvbkMKLsD6pqT/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Privilegios</div>
+          <div class="card-desc">Arts. 239-250 LCQ. Privilegios especiales, generales y gastos de conservación.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1BwhRtMVN8j5ZavLxq_LGvbkMKLsD6pqT/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Informe Final y Distribución</div>
+          <div class="card-desc">Contenido del informe final del síndico, impugnaciones y reservas.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1BwhRtMVN8j5ZavLxq_LGvbkMKLsD6pqT/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Funcionarios Concursales</div>
+          <div class="card-desc">Síndico, coadministrador, comité de acreedores y regulación de honorarios.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1JZjmZeqfjhh3iuvINDWqSntf2tBWzG-H/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Conclusión de la Quiebra</div>
+          <div class="card-desc">Avenimiento, pago total y carta de pago. Tipos y efectos de cada forma conclusiva.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+      <a href="https://docs.google.com/presentation/d/1BwhRtMVN8j5ZavLxq_LGvbkMKLsD6pqT/edit?usp=sharing&ouid=108779643783230531258&rtpof=true&sd=true" target="_blank" class="card">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Clausura</div>
+          <div class="card-desc">Clausura por falta de activo. Inhabilitación del fallido y sus efectos.</div>
+          <span class="card-tag ppt">PowerPoint</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 7. NORMATIVA Y RECURSOS EXTERNOS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">7</div>
+      <div>
+        <div class="section-title">Normativa y recursos externos</div>
+        <div class="section-subtitle">Textos legales, jurisprudencia y bases de datos</div>
+      </div>
+    </div>
+    <div class="list-cards">
+      <a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/25000-29999/25379/texact.htm" target="_blank" class="list-card">
+        <span class="list-card-icon">📗</span>
+        <span class="list-card-title">Ley 24.522 — LCQ (texto actualizado) · InfoLEG</span>
+        <span class="list-card-tag">Normativa</span>
+      </a>
+      <a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/235000-239999/235975/texact.htm" target="_blank" class="list-card">
+        <span class="list-card-icon">📗</span>
+        <span class="list-card-title">Código Civil y Comercial — CCyCN · InfoLEG</span>
+        <span class="list-card-tag">Normativa</span>
+      </a>
+      <a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/25000-29999/26679/texact.htm" target="_blank" class="list-card">
+        <span class="list-card-icon">📗</span>
+        <span class="list-card-title">Ley General de Sociedades 19.550 · InfoLEG</span>
+        <span class="list-card-tag">Normativa</span>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-materiales -->
+
+<!-- PANEL: JURISPRUDENCIA, DOCTRINA Y ACTIVIDADES -->
+<div id="tab-jda" class="tab-panel">
+<div class="container">
+
+  <!-- JURISPRUDENCIA -->
+  <div class="jda-section section">
+    <div class="jda-header">
+      <span class="jda-icon">⚖️</span>
+      <span class="jda-title">Jurisprudencia</span>
+    </div>
+    <div class="list-cards">
+      <a href="https://docs.google.com/document/d/1CLmYbKjWOBfe8Err1VlqPWPphsinb-4o3N64zxQW-m0/edit?usp=sharing" target="_blank" class="list-card">
+        <span class="list-card-icon">📄</span>
+        <span class="list-card-title">Fallo SD Argentina</span>
+        <span class="list-card-tag">Fallo</span>
+      </a>
+      <a href="https://drive.google.com/file/d/1_b_vjrHU3t6iwZ10GFTw0CO3eoyV7dUu/view?usp=sharing" target="_blank" class="list-card">
+        <span class="list-card-icon">📄</span>
+        <span class="list-card-title">Caffarena — Fiscalía</span>
+        <span class="list-card-tag">Fallo</span>
+      </a>
+      <a href="https://drive.google.com/file/d/1URnnSIX6eKspKIjqoi77aTb6tQZ2EzCs/view?usp=sharing" target="_blank" class="list-card">
+        <span class="list-card-icon">📄</span>
+        <span class="list-card-title">Caffarena — Juzgado de Primera Instancia</span>
+        <span class="list-card-tag">Fallo</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- DOCTRINA -->
+  <div class="jda-section section">
+    <div class="jda-header">
+      <span class="jda-icon">📖</span>
+      <span class="jda-title">Doctrina</span>
+    </div>
+    <div class="list-cards">
+      <a href="https://drive.google.com/file/d/19VR538wC5QoZ_Ks2d6if4z0kd-4g1DoU/view?usp=sharing" target="_blank" class="list-card">
+        <span class="list-card-icon">📝</span>
+        <span class="list-card-title">Principios del Derecho Concursal — Dr. Frick</span>
+        <span class="list-card-tag">Artículo</span>
+      </a>
+    </div>
+  </div>
+
+
+</div>
+</div><!-- /tab-jda -->
+
+<!-- PANEL: EVALUACIONES Y NOTAS -->
+<div id="tab-notas" class="tab-panel">
+<div class="container">
+
+  <div class="notas-aviso">
+    <strong>Las notas se publicarán aquí a medida que se obtengan.</strong><br>
+    Cuando estén disponibles, vas a poder consultar tus resultados en cada categoría. Las resoluciones de impugnaciones y recuperatorios también se informarán por este medio.
+  </div>
+
+  <div class="notas-grid">
+    <div class="nota-categoria">
+      <span class="nota-categoria-icon">📋</span>
+      <div class="nota-categoria-title">Parcialitos</div>
+      <div class="nota-categoria-desc">Evaluaciones parciales a lo largo del cuatrimestre.</div>
+      <span class="nota-badge-pronto">Próximamente</span>
+    </div>
+    <div class="nota-categoria">
+      <span class="nota-categoria-icon">🔬</span>
+      <div class="nota-categoria-title">Trabajos Prácticos</div>
+      <div class="nota-categoria-desc">Notas de los trabajos y actividades evaluadas en clase.</div>
+      <span class="nota-badge-pronto">Próximamente</span>
+    </div>
+    <div class="nota-categoria">
+      <span class="nota-categoria-icon">📊</span>
+      <div class="nota-categoria-title">Notas Promedio</div>
+      <div class="nota-categoria-desc">Promedio final de cursada para la regularidad.</div>
+      <span class="nota-badge-pronto">Próximamente</span>
+    </div>
+    <div class="nota-categoria">
+      <span class="nota-categoria-icon">📜</span>
+      <div class="nota-categoria-title">Resoluciones</div>
+      <div class="nota-categoria-desc">Resoluciones de impugnaciones, recuperatorios y situaciones especiales.</div>
+      <span class="nota-badge-pronto">Próximamente</span>
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-notas -->
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<footer>
+  <strong>Derecho Crediticio, Bursátil e Insolvencia · Materia 1360</strong><br>
+  UBA · Facultad de Ciencias Económicas · Primer Cuatrimestre 2026
+</footer>
+
+</body>
+</html>
